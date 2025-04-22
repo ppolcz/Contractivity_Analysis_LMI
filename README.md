@@ -1,6 +1,12 @@
 # Contractivity analysis of nonlinear rational autonomous models
 
-This code uses the LFR Toolbox [1] and the GSS Library [2] of the SMAC Toolbox [7]. For modeling semidefinite program, we use YALMIP [4] with SeDuMi [3] or Mosek [6] solvers. To formulate sufficient polytopic linear matrix inequalities to solve the contraction problem, we used the numerical methods presented in [5].
+This code implements the methods presented in conference paper [0] and uses the LFR Toolbox [1] and the GSS Library [2] of the SMAC Toolbox [7]. For modeling semidefinite program, we use YALMIP [4] with SeDuMi [3] or Mosek [6] solvers. To formulate sufficient polytopic linear matrix inequalities to solve the contraction problem, we used the numerical methods presented in [5].
+
+The example presented in [0] can be preproduced using the Matlab script
+
+```workspace/Traffic_flow_models/TRM_dim4_variant4_LFTbased_Psi.m
+
+[0] P. Polcz and G. Szederkényi (2025). Contraction metric computation for generalized ribosome flow models using linear matrix inequalities. 13th IFAC Symposium on Nonlinear Control Systems (NOLCOS 2025), Reykjavik, Iceland, 23-25 July, 2025
 
 [1] J-F. Magni, "Linear Fractional Representation toolbox for use with Matlab", February 2006, available with the SMAC Toolbox at http://w3.onera.fr/smac/lfrt.
 

@@ -26,7 +26,6 @@ tbxmanager restorepath
 
 addpath(genpath(fullfile(ROOT,'toolboxes')))
 addpath([ROOT filesep 'ftools'])
-addpath([ROOT filesep 'workspace'])
 
 P_init
 

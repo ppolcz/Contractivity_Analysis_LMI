@@ -1,16 +1,15 @@
 %%
 %  Author: Peter Polcz (ppolcz@gmail.com) 
 %  Created on 2024. November 22. (2023a)
-function [s,r] = trm_definitions(dim,variant,s)
+function [s,r] = TRM_definitions(dim,variant,s)
 arguments
     dim
     variant = 1
     s.Check = 0
-    s.Eq = 0
     s.Visualize = 0
     s.Layout = "auto"
     s.View = [0 90];
-    s.DIR = "/home/ppolcz/Dropbox/Peti/PhD/.Dokumentaciok/37_TRM_Contraction/results";
+    s.DIR = "results";
     s.SubDIR = string(datetime('today','Format','yyyy-MM-dd'))
 end
 %% Select [K k_on k_off C], which unique determines the traffic flow reaction model
@@ -56,6 +55,11 @@ k_on = K_(:,n+1);
 k_off = K_(:,n+2);
 C = K_(:,n+3);
 
+s.K = K;
+s.k_on = k_on;
+s.k_off = k_off;
+s.C = C;
+
 Transitions = diag(x) * K * diag(C-x);
 
 f = sum(Transitions,1).'-sum(Transitions,2) - k_off.*x + k_on.*(C-x);
@@ -85,39 +89,6 @@ s.A_plfr = plfr(vertcat(s.Ai_lfr{:}));
 
 if s.Check
     pcz_symzero_report(sym(s.A_plfr) - A,'A_lfr = A_sym')
-end
-
-%% Compute the equilibrium point(s)
-
-if s.Eq
-    
-    import casadi.*
-    
-    Eps = 0.01;
-    x_lim = C .* [Eps 1-Eps];
-    
-    helper = Pcz_CasADi_Helper('SX');
-    
-    x = helper.new_var('x',[n,1],'lb',C*0,'ub',C);
-    
-    Transitions = diag(x) * K * diag(C-x);
-    
-    f = sum(Transitions,1)'-sum(Transitions,2) - k_off.*x + k_on.*(C-x);
-    helper.add_eq_con(f);
-    
-    Nr_Samples = 30;
-    IC = rand(n,Nr_Samples).*diff(x_lim,[],2) + x_lim(:,1);
-    solver = helper.get_nl_solver;
-    sol = solver.solve([],IC);
-    
-    Eq = full(sol.x');
-    
-    [~,Idx] = unique(round(Eq,3),'rows');
-    
-    % return values:
-    % ----------------
-    s.Eq = Eq(Idx,:)';
-    % ----------------
 end
 
 %% Visualize
@@ -158,6 +129,21 @@ end
 end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+function K_on_off_C = dim3(variant)
+%%
+
+    % switch variant
+    %     case 1
+            K_on_off_C = [
+                0   1   0 , 0.5 , 0   , 1
+                0   0   3 , 0   , 0   , 1
+                0.5 0   0 , 0   , 0.5 , 1
+                ];
+    % end
+
+end
+
+
 function K_on_off_C = dim4(variant)
 %%
     switch variant
@@ -192,7 +178,21 @@ function K_on_off_C = dim4(variant)
                 0   0   0   2 , 1 , 0 , 1
                 1.5 0   0   0 , 0 , 0 , 1
                 ];
+
+        case 5
+            K_on_off_C = [
+                0   2   0.5 0 , 0 , 0 , 1
+                0   0   3   0 , 0 , 1 , 1
+                0   0   0   2 , 0 , 0 , 1
+                1.5 0   0   0 , 1 , 0 , 1
+                ];
     end
+
+    return
+    %% 
+
+    [o,r] = trm_definitions(4,5,"Eq",0,'Visualize',2,"Layout","force","View",[35,90], ...
+        "SubDIR","Elso_probalkozasok");
 
 end
 
@@ -201,6 +201,16 @@ function K_on_off_C = dim5(variant)
     
     switch variant
         case 1
+        
+            K_on_off_C = [
+                0   1   0   0   0   , 1 , 0 , 1
+                0   0   3   0   0   , 0 , 0 , 1
+                0   0   0   2   0   , 0 , 1 , 1
+                0   0   0   0   1.5 , 0 , 0 , 1
+                1.5 0   0   0   0   , 0 , 0 , 1
+                ];
+    
+        case 2
         
             K_on_off_C = [
                 0   1   0   0   0   , 1 , 0 , 1

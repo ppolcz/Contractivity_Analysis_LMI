@@ -49,7 +49,7 @@ function disp(G)
     lfrvars_ind = strfind(lfrvars,'LFR-');
     lfrvars = lfrvars(lfrvars_ind(1):end-1);
     lfrvars_ind = strfind(lfrvars,newline);
-    lfrvars = lfrvars(lfrvars_ind+1:end);
+    lfrvars = lfrvars(lfrvars_ind(1)+1:end); % <--- TODO
     
     try
         lines = split(lfrvars,newline);
