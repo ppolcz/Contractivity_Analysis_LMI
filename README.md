@@ -4,7 +4,9 @@ This code implements the methods presented in conference paper [0] and uses the 
 
 The example presented in [0] can be preproduced using the Matlab script
 
-```workspace/Traffic_flow_models/TRM_dim4_variant4_LFTbased_Psi.m
+```
+workspace/Traffic_flow_models/TRM_dim4_variant4_LFTbased_Psi.m
+```
 
 [0] P. Polcz and G. Szederkényi (2025). Contraction metric computation for generalized ribosome flow models using linear matrix inequalities. 13th IFAC Symposium on Nonlinear Control Systems (NOLCOS 2025), Reykjavik, Iceland, 23-25 July, 2025
 
