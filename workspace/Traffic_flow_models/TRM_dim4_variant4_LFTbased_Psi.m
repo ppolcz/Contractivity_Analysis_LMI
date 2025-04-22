@@ -135,12 +135,13 @@ P(Idx1) = 0; % --------------------------------------------------------
 
 CONS = [];
 
+epsilon1 = 0.001;
 betaM = 0.0001;
 for i = 1:size(X_v,1)
     xi = X_v(i,:)';
     
     CONS = [ CONS
-        P + He( L*N(xi) ) - 1e-3*(Ia'*Ia) >= 0
+        P + He( L*N(xi) ) - epsilon1*(Ia'*Ia) >= 0
         He( Ed'*P*Ad + Ld*Nd(xi) ) + betaM*Ed'*P*Ed <= 0
         ];
 end
